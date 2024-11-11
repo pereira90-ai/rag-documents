@@ -173,44 +173,46 @@ def sidebar_and_documentChooser():
 
     with st.sidebar:
         st.caption(
-            "🚀 A retrieval augmented generation chatbot powered by 🔗 Langchain, Cohere, OpenAI, Google Generative AI and 🤗"
+            "🚀 A retrieval augmented generation chatbot powered by 🔗 Langchain, Cohere, OpenAI 🔗"
         )
         st.write("")
+        st.subheader(":rainbow[**OpenAI**]")
+        
+        # llm_chooser = st.radio(
+        #     "Select provider",
+        #     list_LLM_providers,
+        #     captions=[
+        #         "[OpenAI pricing page](https://openai.com/pricing)",
+        #         "Rate limit: 60 requests per minute.",
+        #         "**Free access.**",
+        #     ],
+        # )
 
-        llm_chooser = st.radio(
-            "Select provider",
-            list_LLM_providers,
-            captions=[
-                "[OpenAI pricing page](https://openai.com/pricing)",
-                "Rate limit: 60 requests per minute.",
-                "**Free access.**",
+        st.divider()
+        # if llm_chooser == list_LLM_providers[0]:
+        expander_model_parameters(
+            LLM_provider="OpenAI",
+            text_input_API_key="OpenAI API Key - [Get an API key](https://platform.openai.com/account/api-keys)",
+            list_models=[
+                "gpt-3.5-turbo-0125",
+                "gpt-3.5-turbo",
+                "gpt-4-turbo-preview",
+                "gpt-4o-2024-08-06"
             ],
         )
 
-        st.divider()
-        if llm_chooser == list_LLM_providers[0]:
-            expander_model_parameters(
-                LLM_provider="OpenAI",
-                text_input_API_key="OpenAI API Key - [Get an API key](https://platform.openai.com/account/api-keys)",
-                list_models=[
-                    "gpt-3.5-turbo-0125",
-                    "gpt-3.5-turbo",
-                    "gpt-4-turbo-preview",
-                ],
-            )
-
-        if llm_chooser == list_LLM_providers[1]:
-            expander_model_parameters(
-                LLM_provider="Google",
-                text_input_API_key="Google API Key - [Get an API key](https://makersuite.google.com/app/apikey)",
-                list_models=["gemini-pro"],
-            )
-        if llm_chooser == list_LLM_providers[2]:
-            expander_model_parameters(
-                LLM_provider="HuggingFace",
-                text_input_API_key="HuggingFace API key - [Get an API key](https://huggingface.co/settings/tokens)",
-                list_models=["mistralai/Mistral-7B-Instruct-v0.2"],
-            )
+        # if llm_chooser == list_LLM_providers[1]:
+        #     expander_model_parameters(
+        #         LLM_provider="Google",
+        #         text_input_API_key="Google API Key - [Get an API key](https://makersuite.google.com/app/apikey)",
+        #         list_models=["gemini-pro"],
+        #     )
+        # if llm_chooser == list_LLM_providers[2]:
+        #     expander_model_parameters(
+        #         LLM_provider="HuggingFace",
+        #         text_input_API_key="HuggingFace API key - [Get an API key](https://huggingface.co/settings/tokens)",
+        #         list_models=["mistralai/Mistral-7B-Instruct-v0.2"],
+        #     )
         # Assistant language
         st.write("")
         st.session_state.assistant_language = st.selectbox(
@@ -287,11 +289,7 @@ def sidebar_and_documentChooser():
         if clicked:
             # Check inputs
             error_messages = []
-            if (
-                not st.session_state.openai_api_key
-                and not st.session_state.google_api_key
-                and not st.session_state.hf_api_key
-            ):
+            if not st.session_state.openai_api_key:
                 error_messages.append(
                     f"insert your {st.session_state.LLM_provider} API key"
                 )
