@@ -254,6 +254,8 @@ def sidebar_and_documentChooser():
             accept_multiple_files=True,
             type=(["pdf", "txt", "docx", "csv"]),
         )
+        if not TMP_DIR.exists():  
+            TMP_DIR.mkdir(parents=True, exist_ok=True)  
         # 2. Process documents
         st.session_state.vector_store_name = st.text_input(
             label="**Documents will be loaded, embedded and ingested into a vectorstore (Chroma dB). Please provide a valid dB name.**",
